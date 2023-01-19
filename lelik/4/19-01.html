@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title>Document</title>
+</head>
+<style>
+    body{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .weather{
+width: 20vw;
+background-color: cornflowerblue;
+color: white;
+padding:20px;
+    }
+    .weather_container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .weather_container img{
+        width: 40px;
+        height:40px;
+    }
+</style>
+<body>
+    <div class="weather">
+        <h2>weather in the town <span class="city"></span></h2>
+        <p>temerature <span class="temp"></span>°C</p>
+        <p>humid <span class="hum"></span>%</p>
+        <p>speed of wind <span class="wind"></span>km/h</p>
+        <p class="weather_container">weather <img id="wicon" src= ""></p>
+    </div>
+    <script>
+        /*try{
+            soS();
+        } catch (error){
+            if(error instanceof  ReferenceError){
+                console.log('afqkytljcnegty')
+            }
+            console.log('error')
+        } finally{
+            console.log('!')
+        }*/
+        
+let apiKey = '69eea7577f7bdf59547ca01ebad31937'
+let city ='Minsk'
+let url=`http://api.openweathermap.org/data/2.5/weather?id=15&q=${city}&lang=ru&units=metric&appid=${apiKey}`;
+let cityRes = document.querySelector('.city')
+let tempRes = document.querySelector('.temp')
+let windRes = document.querySelector('.wind')
+let humRes = document.querySelector('.hum')
+let wiconRes = document.querySelector('#wicon')
+fetch(url)
+.then(function(respons){
+return respons;
+})
+.then(function(data){
+    return data.json();
+})
+.then(function(data){
+    showWeather(data);
+})
+;
+
+function showWeather(res){
+    console.log(res);
+
+    cityRes.innerText = res.name;
+    tempRes.innerText = res.main.temp;
+    windRes.innerText = res.wind.speed;
+    humRes.innerText = res.main.humidity;
+
+    let iconCode = res.weather[0].icon;
+    let iconUrl =`http://api.openweathermap.org/img/w/${iconCode}.png`
+    wiconRes.src = iconUrl
+}
+
+    </script>
+</body>
+</html>
